@@ -1,0 +1,73 @@
+:root {
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: var(--coal-black);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Colors */
+  --smoke-gray: #535353;
+  --anthracite-gray: #b3b3b3;
+  --onyx-gray: #212121;
+  --coal-black: #121212;
+  /*  */
+  --font-color:#ffffff;
+  --font-unselected-color:gray;
+  --font-secondary-color: #6a6a6a;
+  /*  */
+  --spotify-color: #1db954;
+  /*  */
+  --hover-color-gray:#33333380;
+  /*  */
+  --background-color-header: #69e68b;
+}
+
+body {
+  margin: 0;
+}
+
+/* Estilos de la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--onyx-gray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--smoke-gray);
+}
+
+/* link react dom*/
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link:hover{
+  color: white;
+}
+
+.redirect{
+  text-decoration: underline;
+}
+
+.subrayado:hover{
+  text-decoration: underline;
+}
+
+.img{
+  max-height: 100px;
+  max-width: 100px;
+}
