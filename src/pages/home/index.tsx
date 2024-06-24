@@ -1,7 +1,206 @@
-import { ButtonBase } from "@mui/material";
-import { useEffect } from "react";
+import { Avatar, Box, Button, Stack, Typography } from "@mui/material";
+import NicolasPNG from "../../assets/nicolas.jpg";
 
 export function Home() {
-  useEffect(() => {}, []);
-  return <ButtonBase>Home</ButtonBase>;
+  return (
+    <Box>
+      <Box fontSize="2xl" fontWeight="bold">
+        <Typography
+          variant="h2"
+          textAlign={"center"}
+          color={"var(--spotify-color)"}
+        >
+          Spotify Remote Control
+        </Typography>
+      </Box>
+
+      <Box mt={4} fontSize="xl">
+        <Typography variant="h4" color={"var(--spotify-color)"}>
+          Sobre el Proyecto
+        </Typography>
+      </Box>
+      <Box mt={2}>
+        <Typography variant="subtitle1" gutterBottom>
+          Spotify Remote Control es una aplicación diseñada para proporcionar
+          control remoto sobre la música que se está reproduciendo en tu
+          dispositivo. Ofrece funcionalidades como cambiar de canción, ajustar
+          el volumen y más. Además, permite buscar artistas, álbumes y otras
+          categorías de contenido.
+        </Typography>
+      </Box>
+
+      <Box mt={4} fontSize="xl" fontWeight="semibold">
+        <Typography variant="h4" color={"var(--spotify-color)"}>
+          Objetivos
+        </Typography>
+      </Box>
+      <Box mt={2}>
+        <Typography variant="subtitle1" gutterBottom>
+          El objetivo principal de este proyecto es aprovechar la API WEB de
+          Spotify. A través de diversos endpoints, podemos realizar
+          modificaciones en la reproducción de música y obtener información
+          relevante, mejorando así la experiencia del usuario.
+        </Typography>
+      </Box>
+
+      <Box mt={4} fontSize="xl" fontWeight="semibold">
+        <Typography variant="h4" color={"var(--spotify-color)"}>
+          Herramientas
+        </Typography>
+      </Box>
+      <Box mt={2}>
+        <Typography variant="subtitle1" gutterBottom>
+          Las tecnologías utilizadas en el desarrollo de esta aplicación
+          incluyen
+          <FrameworkRedirect href="https://es.react.dev" text="React" />
+          <Typography
+            variant="subtitle1"
+            display={"inline"}
+            gutterBottom
+            marginX={"3px"}
+          >
+            ,
+          </Typography>
+          <FrameworkRedirect
+            href="https://www.typescriptlang.org"
+            text="TypeScript"
+          />
+          <Typography
+            variant="subtitle1"
+            display={"inline"}
+            gutterBottom
+            marginLeft={"3px"}
+          >
+            y
+          </Typography>
+          <FrameworkRedirect href="https://v2.chakra-ui.com" text="ChakraUI." />
+        </Typography>
+      </Box>
+
+      <Box mt={4} fontSize="xl" fontWeight="semibold">
+        <Typography variant="h4" color={"var(--spotify-color)"}>
+          Desarrollador
+        </Typography>
+      </Box>
+      <Box mt={2}>
+        <Typography variant="subtitle1" gutterBottom>
+          <ProfileCard
+            photo={NicolasPNG}
+            name="Nicolas Stebner"
+            role="Dev. FullStack"
+            github="https://github.com/NicolasStebner"
+            linkedIn="https://www.linkedIn.com/in/nicolas-stebner/"
+          />
+        </Typography>
+      </Box>
+    </Box>
+  );
+}
+
+type ProfileCardType = {
+  photo: string;
+  name: string;
+  role: string;
+  github: string;
+  linkedIn: string;
+};
+
+function ProfileCard({ photo, name, role, github, linkedIn }: ProfileCardType) {
+  return (
+    <Box
+      sx={{
+        minWidth: 260,
+        maxWidth: 260,
+        width: "100%",
+        boxShadow: 24,
+        borderRadius: "8px",
+        p: 3,
+        textAlign: "center",
+        margin: "0 auto",
+        mb: "100px",
+      }}
+    >
+      <Avatar
+        sx={{ width: 56, height: 56, mb: 2, margin: "0 auto" }}
+        src={photo}
+      />
+      <Typography variant="h5" component="h2">
+        {name}
+      </Typography>
+      <Typography variant="h6" component="h2">
+        {role}
+      </Typography>
+      <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+        <Button
+          fullWidth
+          size="small"
+          component="a"
+          target="_blank"
+          href={github}
+          sx={{
+            color: "white",
+            borderRadius: "50px",
+            backgroundColor: "#2b3137",
+            "&:hover": {
+              boxShadow:
+                "0px 1px 25px -5px rgba(132, 138, 142, 0.48), 0 10px 10px -5px rgba(132, 138, 142, 0.48)",
+              backgroundColor: "#24292e",
+            },
+            "&:focus": {
+              backgroundColor: "#24292e",
+            },
+          }}
+        >
+          Github
+        </Button>
+        <Button
+          fullWidth
+          size="small"
+          component="a"
+          target="_blank"
+          href={linkedIn}
+          sx={{
+            borderRadius: "50px",
+            backgroundColor: "blue.400",
+            color: "white",
+            "&:hover": {
+              boxShadow:
+                "0px 1px 25px -5px rgba(66, 153, 225, 0.48), 0 10px 10px -5px rgba(66, 153, 225, 0.43)",
+              backgroundColor: "blue.500",
+            },
+            "&:focus": {
+              backgroundColor: "blue.500",
+            },
+          }}
+        >
+          LinkedIn
+        </Button>
+      </Stack>
+    </Box>
+  );
+}
+
+type FrameworkRedirectType = {
+  href: string;
+  text: string;
+};
+function FrameworkRedirect({ href, text }: FrameworkRedirectType) {
+  return (
+    <Typography
+      variant="subtitle1"
+      component="a"
+      target="_blank"
+      href={href}
+      ml={"3px"}
+      sx={{
+        color: "white",
+        textDecoration: "none",
+        "&:hover": {
+          textDecoration: "underline",
+        },
+      }}
+    >
+      {text}
+    </Typography>
+  );
 }
