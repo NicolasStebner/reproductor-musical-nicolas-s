@@ -1,4 +1,3 @@
-import { useAuth } from './../providers/auth/AuthContext';
 import axios from "axios"
 import { Album } from "../domain/album"
 import { Artist } from "../domain/artist"
