@@ -1,6 +1,6 @@
-import { ButtonBase } from "@mui/material";
 import { useEffect } from "react";
 import { useAuth } from "../../providers/auth/AuthContext";
+import { AuthPageSecondary } from "./page";
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
 export function AuthPage() {
@@ -25,7 +25,7 @@ export function AuthPage() {
       }
     });
   });
-  return <ButtonBase>Auth</ButtonBase>;
+  return <AuthPageSecondary />;
 }
 
 async function redirectToAuthCodeFlow() {
