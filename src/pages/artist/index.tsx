@@ -10,6 +10,7 @@ import { Box, Grid, Pagination } from "@mui/material";
 import { GridAlbumArtists } from "../../components/grid-album-artists";
 import { CardComp } from "../../components/card-artist";
 import { TopTrackItem } from "../../domain/topTrackItem";
+import { useAuth } from "../../providers/auth/AuthContext";
 
 const ITEMS_PER_PAGE = 6; // Cambia esto al número de items por página que prefieras
 
@@ -24,24 +25,34 @@ export function ArtistPage() {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [topTracks, setTopTracks] = useState<TopTrackItem[]>([]);
   const [relatedArtists, setRelatedArtists] = useState<Artist[]>([]);
-
+  //
+  const { access_token } = useAuth();
   const getArtist = async () => {
-    const artistData = await serviceSpotify.getArtist(id!);
+    const artistData = await serviceSpotify.getArtist(id!, access_token!!);
     setArtist(artistData);
   };
 
   const getAlbums = async () => {
-    const albumsData = await serviceSpotify.getAlbumOfAnArtist(id!);
+    const albumsData = await serviceSpotify.getAlbumOfAnArtist(
+      id!,
+      access_token!!
+    );
     setAlbums(albumsData);
   };
 
   const getTopTracks = async () => {
-    const topTracksData = await serviceSpotify.getTopTracksOfAnArtist(id!);
+    const topTracksData = await serviceSpotify.getTopTracksOfAnArtist(
+      id!,
+      access_token!!
+    );
     setTopTracks(topTracksData);
   };
 
   const getRelatedArtist = async () => {
-    const relatedArtistsData = await serviceSpotify.getRelatedArtists(id!);
+    const relatedArtistsData = await serviceSpotify.getRelatedArtists(
+      id!,
+      access_token!!
+    );
     setRelatedArtists(relatedArtistsData);
   };
 
@@ -58,7 +69,7 @@ export function ArtistPage() {
     getAlbums();
     getTopTracks();
     getRelatedArtist();
-  }, [id]);
+  }, [id, access_token]);
 
   const handlerAlbum = (albumID: string) => {
     navigate("/album/" + albumID);
@@ -110,9 +121,9 @@ export function ArtistPage() {
       </Box>
       <Box>
         <SubtitleArtist text="Popular" />
-        <div style={{ height: 800, width: "60%" }}>
+        <Box style={{ height: 800, width: "60%" }}>
           <TableTrackItem topTracks={topTracks}></TableTrackItem>
-        </div>
+        </Box>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column", gap: "50px" }}>
         <Box>

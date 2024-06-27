@@ -1,14 +1,12 @@
-import { ButtonBase } from "@mui/material";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useAuth } from "../../providers/auth/AuthContext";
+import { AuthPageSecondary } from "./page";
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
 export function AuthPage() {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const code = queryParams.get("code");
+  const { changeAccessToken, access_token } = useAuth();
+
   useEffect(() => {
-    console.log("code!! xD", code);
     const getToken = async () => {
       const urlParams = new URLSearchParams(window.location.search);
       let code = urlParams.get("code");
@@ -16,19 +14,18 @@ export function AuthPage() {
       if (!code) {
         redirectToAuthCodeFlow();
       } else {
-        if (
-          localStorage.getItem("access_token") == null &&
-          localStorage.getItem("listo") == "verdad"
-        ) {
-          localStorage.setItem("listo", "falso");
-          const token = await getAccessToken(code);
-          console.log("token posta", token);
+        if (access_token == null) {
+          return await getAccessToken(code);
         }
       }
     };
-    getToken();
+    getToken().then((data) => {
+      if (data) {
+        changeAccessToken(data);
+      }
+    });
   });
-  return <ButtonBase>Auth</ButtonBase>;
+  return <AuthPageSecondary />;
 }
 
 async function redirectToAuthCodeFlow() {
@@ -36,7 +33,6 @@ async function redirectToAuthCodeFlow() {
   const verifier = generateCodeVerifier(128);
   const challenge = await generateCodeChallenge(verifier);
   localStorage.setItem("verifier", verifier);
-  localStorage.setItem("listo", "verdad");
 
   const params = new URLSearchParams();
   params.append("client_id", clientId);
@@ -86,8 +82,6 @@ async function getAccessToken(code: string) {
   });
 
   const { access_token } = await result.json();
-
-  localStorage.setItem("access_token", access_token);
 
   return access_token;
 }

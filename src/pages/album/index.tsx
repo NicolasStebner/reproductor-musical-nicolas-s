@@ -8,6 +8,7 @@ import { GridTrackAlbum } from "../../components/grid-track-album";
 import { AlbumTitle, AlbumTypeText } from "../../ui/text";
 import { AvatarAlbum } from "../../ui/avatar";
 import { Loading } from "../../components/loading";
+import { useAuth } from "../../providers/auth/AuthContext";
 
 export function AlbumPage() {
   const blockRef = useRef(null);
@@ -15,21 +16,21 @@ export function AlbumPage() {
   const { id } = useParams();
   const [album, setAlbum] = useState<Album>();
   const [tracks, setTracks] = useState<TrackItem[]>([]);
-
+  const { access_token } = useAuth();
   useEffect(() => {
     const getTracks = async () => {
-      const data = await serviceSpotify.getAlbumTracks(id!);
+      const data = await serviceSpotify.getAlbumTracks(id!, access_token!!);
       setTracks(data);
     };
     const getAlbum = async () => {
-      const data = await serviceSpotify.getAlbum(id!);
+      const data = await serviceSpotify.getAlbum(id!, access_token!!);
       setAlbum(data);
     };
     scrollToTop();
     getTracks();
     getAlbum();
     setIsLoading(false);
-  }, []);
+  }, [access_token]);
 
   const scrollToTop = () => {
     if (blockRef.current) {

@@ -2,7 +2,6 @@ import { Box, Grid, Stack, TextField } from "@mui/material";
 import { Subtitle } from "../../ui/text";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import EastIcon from "@mui/icons-material/East";
 import { ButtonIconSmall } from "../../ui/button";
 import { CardComp } from "../card-artist";
@@ -11,6 +10,8 @@ import { useEffect, useState } from "react";
 import { Artist } from "../../domain/artist";
 import { serviceSpotify } from "../../services/service";
 import { Loading } from "../loading";
+import { useAuth } from "../../providers/auth/AuthContext";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 export function SideBar() {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,9 +20,11 @@ export function SideBar() {
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  /*  */
+  const { access_token } = useAuth();
 
   const fetchData = async () => {
-    const artists = await serviceSpotify.getArtistSideBar();
+    const artists = await serviceSpotify.getArtistSideBar(access_token!!);
     setArtists(artists);
     setArtistsFilter(artists);
     setIsLoading(false);
@@ -29,7 +32,7 @@ export function SideBar() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [access_token]);
 
   useEffect(() => {
     filterArtists();
@@ -117,8 +120,8 @@ export function SideBar() {
           <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
             <Link to="/auth" className="link">
               <Box sx={{ display: "flex", gap: 1 }}>
-                <LibraryMusicIcon></LibraryMusicIcon>
-                <Subtitle text="Auth"></Subtitle>
+                <AccountBoxIcon />
+                <Subtitle text="Ingresar"></Subtitle>
               </Box>
             </Link>
             <ButtonIconSmall>

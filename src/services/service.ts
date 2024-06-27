@@ -5,22 +5,24 @@ import { AlbumFromJSONType, ArtistFromJSONType, TrackItemFromJSONType } from "..
 import { TrackItem } from "../domain/trackItem"
 import { TopTrackItem } from "../domain/topTrackItem"
 import { playbackType } from "../types/player"
+import { API_URL } from './configuration';
 
-class Service {
-  async getAlbum(id: string): Promise<Album>{
-    const rta = await axios.get<any>('https://api.spotify.com/v1/albums/' + id,{
+class Service{
+
+  async getAlbum(id: string, access_token:string): Promise<Album>{
+    const rta = await axios.get<any>(`${API_URL}/albums/` + id,{
       headers:{
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       },
     }
     )
     return Album.initialize(rta.data)
   }
 
-  async getAlbumTracks(id: string): Promise<TrackItem[]>{
-    const rta = await axios.get<any>('https://api.spotify.com/v1/albums/' + id + "/tracks",{
+  async getAlbumTracks(id: string, access_token:string): Promise<TrackItem[]>{
+    const rta = await axios.get<any>(`${API_URL}/albums/` + id + "/tracks",{
       headers:{
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       },
     }
     )
@@ -28,50 +30,50 @@ class Service {
     return rta.data.items.map((t)=>TrackItem.initialize([],t))
   }
 
-  async getArtist(id: string): Promise<Artist>{
-    const rta = await axios.get<any>('https://api.spotify.com/v1/artists/' + id,{
+  async getArtist(id: string, access_token:string): Promise<Artist>{
+    const rta = await axios.get<any>(`${API_URL}/artists/` + id,{
       headers:{
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       },
     }
     )
     return Artist.initialize(rta.data)
   }
 
-  async getAlbumOfAnArtist(id: string): Promise<Album[]>{
-    const rta = await axios.get<any>('https://api.spotify.com/v1/artists/' + id + "/albums",{
+  async getAlbumOfAnArtist(id: string, access_token:string): Promise<Album[]>{
+    const rta = await axios.get<any>(`${API_URL}/artists/` + id + "/albums",{
       headers:{
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       },
     }
     )
     return rta.data.items.map((a:AlbumFromJSONType)=>Album.initialize(a))
   }
 
-  async getTopTracksOfAnArtist(id: string): Promise<TopTrackItem[]>{
-    const rta = await axios.get<any>('https://api.spotify.com/v1/artists/' + id + "/top-tracks",{
+  async getTopTracksOfAnArtist(id: string, access_token:string): Promise<TopTrackItem[]>{
+    const rta = await axios.get<any>(`${API_URL}/artists/` + id + "/top-tracks",{
       headers:{
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       },
     }
     )
     return rta.data.tracks.map((t:TrackItemFromJSONType)=>TopTrackItem.initialize(t))
   }
 
-  async getRelatedArtists(id: string): Promise<Artist[]>{
-    const rta = await axios.get<any>('https://api.spotify.com/v1/artists/' + id + "/related-artists",{
+  async getRelatedArtists(id: string, access_token:string): Promise<Artist[]>{
+    const rta = await axios.get<any>(`${API_URL}/artists/` + id + "/related-artists",{
       headers:{
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       },
     }
     )
     return rta.data.artists.map((t:ArtistFromJSONType)=>Artist.initialize(t))
   }
 
-  async getArtistSideBar(): Promise<Artist[]>{
-    const rta = await axios.get<any>('https://api.spotify.com/v1/me/following?type=artist',{
+  async getArtistSideBar(access_token:string): Promise<Artist[]>{
+    const rta = await axios.get<any>(`${API_URL}/me/following?type=artist`,{
       headers:{
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       },
     }
     )
@@ -79,10 +81,10 @@ class Service {
     return rta.data.artists.items.map((art)=>Artist.initialize(art))
   }
 
-  async searchByType(query:string, type:"album" | "artist" | "track"){
-    const rta = await axios.get<any>(`https://api.spotify.com/v1/search?q=${query}&type=${type}`,{
+  async searchByType(query:string, type:"album" | "artist" | "track", access_token:string){
+    const rta = await axios.get<any>(`${API_URL}/search?q=${query}&type=${type}`,{
       headers:{
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       },
     }
     )
@@ -100,76 +102,76 @@ class Service {
     }
   }
 
-  async getPlaybackState():Promise<playbackType>{
-    const rta = await axios.get<any>(`https://api.spotify.com/v1/me/player`,{
+  async getPlaybackState(access_token:string):Promise<playbackType>{
+    const rta = await axios.get<any>(`${API_URL}/me/player`,{
       headers:{
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       },
     }
     )
     return rta.data
   }
   
-  async modifyVolume(volume:number, deviceId:string):Promise<void>{
+  async modifyVolume(volume:number, deviceId:string, access_token:string):Promise<void>{
     await axios({
       method:"put",
-      url:"https://api.spotify.com/v1/me/player/volume",
+      url:`${API_URL}/me/player/volume`,
       params:{
         volume_percent:volume,
         device_id:deviceId
       },
       headers:{
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       },
     })
   }
 
-  async previousSong(deviceId:string){
+  async previousSong(deviceId:string, access_token:string){
     await axios({
       method:"post",
-      url:"https://api.spotify.com/v1/me/player/previous",
+      url:`${API_URL}/me/player/previous`,
       params:{
         device_id:deviceId
       },
       headers:{
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       },
     })
   }
-  async play(deviceId:string){
+  async play(deviceId:string, access_token:string){
     await axios({
       method:"put",
-      url:"https://api.spotify.com/v1/me/player/play",
+      url:`${API_URL}/me/player/play`,
       params:{
         device_id:deviceId
       },
       headers:{
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       },
     })
   }
-  async pause(deviceId:string){
+  async pause(deviceId:string, access_token:string){
     await axios({
       method:"put",
-      url:"https://api.spotify.com/v1/me/player/pause",
+      url:`${API_URL}/me/player/pause`,
       params:{
         device_id:deviceId
       },
       headers:{
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       },
     })
   }
 
-  async nextSong(deviceId:string){
+  async nextSong(deviceId:string, access_token:string){
     await axios({
       method:"post",
-      url:"https://api.spotify.com/v1/me/player/next",
+      url: `${API_URL}/me/player/next`,
       params:{
         device_id:deviceId
       },
       headers:{
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       },
     })
   }
