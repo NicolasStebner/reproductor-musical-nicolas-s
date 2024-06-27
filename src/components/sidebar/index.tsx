@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { Artist } from "../../domain/artist";
 import { serviceSpotify } from "../../services/service";
 import { Loading } from "../loading";
+import { useAuth } from "../../providers/auth/AuthContext";
 
 export function SideBar() {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,9 +20,11 @@ export function SideBar() {
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  /*  */
+  const { access_token } = useAuth();
 
   const fetchData = async () => {
-    const artists = await serviceSpotify.getArtistSideBar();
+    const artists = await serviceSpotify.getArtistSideBar(access_token!!);
     setArtists(artists);
     setArtistsFilter(artists);
     setIsLoading(false);
@@ -29,7 +32,7 @@ export function SideBar() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [access_token]);
 
   useEffect(() => {
     filterArtists();

@@ -20,6 +20,7 @@ import { Loading } from "../loading";
 import { playbackType } from "../../types/player";
 import { msToMinutesWithSeconds } from "../../util/milisegundosAMinutosConSegundos";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../providers/auth/AuthContext";
 
 export function MusicPlayer() {
   const [playbackState, setPlaybackState] = useState<playbackType | null>(null);
@@ -39,13 +40,16 @@ export function MusicPlayer() {
     durationComplete: 0,
   });
   const navigate = useNavigate();
-
+  /*  */
+  const { access_token } = useAuth();
   /* useEffect del componente general */
   const all = () => {
     const getPlaybackState = async () => {
-      const playbackStateFetched = await serviceSpotify.getPlaybackState();
-      setIdArtist(playbackStateFetched.item.artists[0].id);
-      setIdAlbum(playbackStateFetched.item.album.id);
+      const playbackStateFetched = await serviceSpotify.getPlaybackState(
+        access_token!!
+      );
+      setIdArtist(playbackStateFetched.item?.artists[0]?.id);
+      setIdAlbum(playbackStateFetched.item?.album?.id);
       setPlaybackState(playbackStateFetched as any);
       setVolume(playbackStateFetched?.device.volume_percent!!);
       setArtist({
@@ -61,7 +65,7 @@ export function MusicPlayer() {
     };
 
     const changeArtist = async () => {
-      const lastState = await serviceSpotify.getPlaybackState();
+      const lastState = await serviceSpotify.getPlaybackState(access_token!!);
       setArtist({
         image: lastState?.item.album?.images[0]?.url as string,
         alt: lastState?.item.artists[0].name as string,
@@ -75,7 +79,7 @@ export function MusicPlayer() {
   };
   useEffect(() => {
     all();
-  }, [loadingArtist]);
+  }, [loadingArtist, access_token]);
 
   /* Slider de los minutos de la cancion */
   useEffect(() => {
@@ -111,27 +115,34 @@ export function MusicPlayer() {
   };
 
   const handlerPreviousSong = async () => {
-    await serviceSpotify.previousSong(playbackState?.device.id!!);
+    await serviceSpotify.previousSong(
+      playbackState?.device.id!!,
+      access_token!!
+    );
     updateCurrentSong();
   };
 
   const handlerNextSong = async () => {
-    await serviceSpotify.nextSong(playbackState?.device.id!!);
+    await serviceSpotify.nextSong(playbackState?.device.id!!, access_token!!);
     updateCurrentSong();
   };
 
   const handlerPlay = async () => {
-    await serviceSpotify.play(playbackState?.device.id!!);
+    await serviceSpotify.play(playbackState?.device.id!!, access_token!!);
     togglePlaying();
   };
 
   const handlerPause = async () => {
-    await serviceSpotify.pause(playbackState?.device.id!!);
+    await serviceSpotify.pause(playbackState?.device.id!!, access_token!!);
     togglePlaying();
   };
 
   const modifyVolume = async (newVolume: number) => {
-    await serviceSpotify.modifyVolume(newVolume, playbackState?.device.id!!);
+    await serviceSpotify.modifyVolume(
+      newVolume,
+      playbackState?.device.id!!,
+      access_token!!
+    );
   };
 
   return (

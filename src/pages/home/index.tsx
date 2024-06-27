@@ -6,11 +6,11 @@ export function Home() {
     <Box>
       <Box fontSize="2xl" fontWeight="bold">
         <Typography
-          variant="h2"
+          variant="h3"
           textAlign={"center"}
           color={"var(--spotify-color)"}
         >
-          Spotify Remote Control
+          SPOTIFY REMOTE CONTROL
         </Typography>
       </Box>
 
@@ -53,26 +53,16 @@ export function Home() {
           Las tecnologías utilizadas en el desarrollo de esta aplicación
           incluyen
           <FrameworkRedirect href="https://es.react.dev" text="React" />
-          <Typography
-            variant="subtitle1"
-            display={"inline"}
-            gutterBottom
-            marginX={"3px"}
-          >
+          <Box display={"inline"} marginLeft={"3px"}>
             ,
-          </Typography>
+          </Box>
           <FrameworkRedirect
             href="https://www.typescriptlang.org"
             text="TypeScript"
           />
-          <Typography
-            variant="subtitle1"
-            display={"inline"}
-            gutterBottom
-            marginLeft={"3px"}
-          >
+          <Box display={"inline"} marginLeft={"3px"}>
             y
-          </Typography>
+          </Box>
           <FrameworkRedirect href="https://v2.chakra-ui.com" text="ChakraUI." />
         </Typography>
       </Box>
@@ -124,12 +114,8 @@ function ProfileCard({ photo, name, role, github, linkedIn }: ProfileCardType) {
         sx={{ width: 56, height: 56, mb: 2, margin: "0 auto" }}
         src={photo}
       />
-      <Typography variant="h5" component="h2">
-        {name}
-      </Typography>
-      <Typography variant="h6" component="h2">
-        {role}
-      </Typography>
+      <Typography variant="h5">{name}</Typography>
+      <Typography variant="h6">{role}</Typography>
       <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
         <Button
           fullWidth

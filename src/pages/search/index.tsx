@@ -12,6 +12,7 @@ import { GridSongs } from "../../components/grid-songs";
 import { Loading } from "../../components/loading";
 import { SearchTitle, TextHelp } from "../../ui/text";
 import { TopArtist } from "../../components/top-artist";
+import { useAuth } from "../../providers/auth/AuthContext";
 
 const ITEMS_PER_PAGE = 6; // Cambia esto al número de items por página que prefieras
 
@@ -27,19 +28,35 @@ export function SearchPage() {
   const [pageAlbums, setPageAlbums] = useState(1);
   const [pageRelatedArtists, setPageRelatedArtists] = useState(1);
   /*  */
+  const { access_token } = useAuth();
+  /*  */
   useEffect(() => {
     const getData = async () => {
-      const artistsFetched = await serviceSpotify.searchByType(query, "artist");
-      const albumsFetched = await serviceSpotify.searchByType(query, "album");
-      var tracksFetched = await serviceSpotify.searchByType(query, "track");
-      tracksFetched = tracksFetched.slice(0, 5);
-      setAlbums(albumsFetched);
-      setTracks(tracksFetched);
-      setArtists(artistsFetched);
-      setIsLoading(false);
+      if (query != "") {
+        const artistsFetched = await serviceSpotify.searchByType(
+          query,
+          "artist",
+          access_token!!
+        );
+        const albumsFetched = await serviceSpotify.searchByType(
+          query,
+          "album",
+          access_token!!
+        );
+        var tracksFetched = await serviceSpotify.searchByType(
+          query,
+          "track",
+          access_token!!
+        );
+        tracksFetched = tracksFetched.slice(0, 5);
+        setAlbums(albumsFetched);
+        setTracks(tracksFetched);
+        setArtists(artistsFetched);
+        setIsLoading(false);
+      }
     };
     getData();
-  }, [query]);
+  }, [query, access_token]);
 
   const handlerAlbum = (albumID: string) => {
     navigate("/album/" + albumID);
