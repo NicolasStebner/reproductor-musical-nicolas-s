@@ -78,7 +78,7 @@ export function Home() {
             photo={NicolasPNG}
             name="Nicolas Stebner"
             role="Dev. FullStack"
-            github="https://github.com/NicolasStebner"
+            portfolio="https://nicolasalejandrostebner.vercel.app"
             linkedIn="https://www.linkedIn.com/in/nicolas-stebner/"
           />
         </Typography>
@@ -91,11 +91,17 @@ type ProfileCardType = {
   photo: string;
   name: string;
   role: string;
-  github: string;
+  portfolio: string;
   linkedIn: string;
 };
 
-function ProfileCard({ photo, name, role, github, linkedIn }: ProfileCardType) {
+function ProfileCard({
+  photo,
+  name,
+  role,
+  portfolio,
+  linkedIn,
+}: ProfileCardType) {
   return (
     <Box
       sx={{
@@ -122,7 +128,7 @@ function ProfileCard({ photo, name, role, github, linkedIn }: ProfileCardType) {
           size="small"
           component="a"
           target="_blank"
-          href={github}
+          href={portfolio}
           sx={{
             color: "white",
             borderRadius: "50px",
@@ -137,7 +143,7 @@ function ProfileCard({ photo, name, role, github, linkedIn }: ProfileCardType) {
             },
           }}
         >
-          Github
+          Portfolio
         </Button>
         <Button
           fullWidth
@@ -147,15 +153,15 @@ function ProfileCard({ photo, name, role, github, linkedIn }: ProfileCardType) {
           href={linkedIn}
           sx={{
             borderRadius: "50px",
-            backgroundColor: "blue.400",
+            backgroundColor: "var(--linkedin-color)",
             color: "white",
             "&:hover": {
               boxShadow:
                 "0px 1px 25px -5px rgba(66, 153, 225, 0.48), 0 10px 10px -5px rgba(66, 153, 225, 0.43)",
-              backgroundColor: "blue.500",
+              backgroundColor: "var(--linkedin-color)",
             },
             "&:focus": {
-              backgroundColor: "blue.500",
+              backgroundColor: "var(--linkedin-color)",
             },
           }}
         >

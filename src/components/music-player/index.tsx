@@ -166,7 +166,13 @@ export function MusicPlayer() {
               <Loading />
             </Box>
           ) : (
-            <Stack direction={"row"} sx={{ alignItems: "space-between" }}>
+            <Stack
+              direction={"row"}
+              sx={{
+                alignItems: "space-between",
+                minWidth: "20%",
+              }}
+            >
               <CardMedia
                 component="img"
                 sx={{
