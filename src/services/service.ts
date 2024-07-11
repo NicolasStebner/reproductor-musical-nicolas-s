@@ -9,6 +9,16 @@ import { API_URL } from './configuration';
 
 class Service{
 
+  async getUserData(access_token:string): Promise<any>{
+    const rta = await axios.get<any>(`${API_URL}/me/`,{
+      headers:{
+        'Authorization': 'Bearer ' + access_token
+      },
+    }
+    )
+    return rta.data
+  }
+
   async getAlbum(id: string, access_token:string): Promise<Album>{
     const rta = await axios.get<any>(`${API_URL}/albums/` + id,{
       headers:{
