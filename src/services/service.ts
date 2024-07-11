@@ -9,6 +9,16 @@ import { API_URL } from './configuration';
 
 class Service{
 
+  async getUserData(access_token:string): Promise<any>{
+    const rta = await axios.get<any>(`${API_URL}/me/`,{
+      headers:{
+        'Authorization': 'Bearer ' + access_token
+      },
+    }
+    )
+    return rta.data
+  }
+
   async getAlbum(id: string, access_token:string): Promise<Album>{
     const rta = await axios.get<any>(`${API_URL}/albums/` + id,{
       headers:{
@@ -68,6 +78,43 @@ class Service{
     }
     )
     return rta.data.artists.map((t:ArtistFromJSONType)=>Artist.initialize(t))
+  }
+
+  async checkIfUser5FollowArtist(id: string, access_token:string): Promise<boolean[]>{
+    const rta = await axios.get<any>(`${API_URL}/me/following/contains?type=artist&ids=${id}`,{
+      headers:{
+        'Authorization': 'Bearer ' + access_token
+      },
+    }
+    )
+    return rta.data
+  }
+
+  async followArtist(id:string,access_token:string):Promise<any>{
+    const rta = await axios.put<any>(`${API_URL}/me/following?type=artist&ids=${id}`,{
+      "ids": [
+        "string"
+      ]}
+    ,{
+      headers:{
+        'Authorization': 'Bearer ' + access_token
+      }
+    }
+    )
+    return rta.data
+  }
+  async unfollowArtist(id:string,access_token:string):Promise<any>{
+    const rta = await axios.delete<any>(`${API_URL}/me/following?type=artist&ids=${id}`,{
+      headers:{
+        'Authorization': 'Bearer ' + access_token
+      },
+      //@ts-ignore
+      "ids": [
+        "string"
+      ]
+    }
+    )
+    return rta.data
   }
 
   async getArtistSideBar(access_token:string): Promise<Artist[]>{

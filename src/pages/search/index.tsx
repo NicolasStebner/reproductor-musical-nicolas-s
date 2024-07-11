@@ -111,7 +111,7 @@ export function SearchPage() {
           }}
           value={query}
           autoFocus
-          placeholder="Buscar artista"
+          placeholder="Search Artist"
           variant="outlined"
           color="success"
           onChange={handlerChange}
@@ -242,7 +242,7 @@ export function SearchPage() {
           alignItems={"center"}
           sx={{ marginBottom: "100px", minHeight: "300px" }}
         >
-          <TextHelp text="Buscá tu artista favorito..."></TextHelp>
+          <TextHelp text="Search your favourite artist."></TextHelp>
         </Box>
       )}
     </Box>

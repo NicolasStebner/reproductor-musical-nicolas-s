@@ -2,8 +2,6 @@ import { Box, Grid, Stack, TextField } from "@mui/material";
 import { Subtitle } from "../../ui/text";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import EastIcon from "@mui/icons-material/East";
-import { ButtonIconSmall } from "../../ui/button";
 import { CardComp } from "../card-artist";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -21,7 +19,7 @@ export function SideBar() {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   /*  */
-  const { access_token } = useAuth();
+  const { userFollowedSomeone, access_token } = useAuth();
 
   const fetchData = async () => {
     const artists = await serviceSpotify.getArtistSideBar(access_token!!);
@@ -32,7 +30,7 @@ export function SideBar() {
 
   useEffect(() => {
     fetchData();
-  }, [access_token]);
+  }, [userFollowedSomeone, access_token]);
 
   useEffect(() => {
     filterArtists();
@@ -121,12 +119,9 @@ export function SideBar() {
             <Link to="/auth" className="link">
               <Box sx={{ display: "flex", gap: 1 }}>
                 <AccountBoxIcon />
-                <Subtitle text="Ingresar"></Subtitle>
+                <Subtitle text="Log In"></Subtitle>
               </Box>
             </Link>
-            <ButtonIconSmall>
-              <EastIcon />
-            </ButtonIconSmall>
           </Stack>
           {/* Grid con los artistas */}
           <Grid

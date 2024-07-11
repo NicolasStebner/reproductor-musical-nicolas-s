@@ -6,7 +6,7 @@ import { Artist } from "../../domain/artist";
 import { SubtitleArtist, TitleArtist } from "../../ui/text";
 import { TableTrackItem } from "../../components/trackItems-table";
 import { CardAlbum } from "../../components/card-album";
-import { Box, Grid, Pagination } from "@mui/material";
+import { Box, Button, Grid, Pagination } from "@mui/material";
 import { GridAlbumArtists } from "../../components/grid-album-artists";
 import { CardComp } from "../../components/card-artist";
 import { TopTrackItem } from "../../domain/topTrackItem";
@@ -22,11 +22,13 @@ export function ArtistPage() {
   const [pageRelatedArtists, setPageRelatedArtists] = useState(1);
   // @ts-ignore
   const [artist, setArtist] = useState<Artist>([]);
+  const [userFollowsArtist, setUserFollowsArtist] = useState<boolean>(false);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [topTracks, setTopTracks] = useState<TopTrackItem[]>([]);
   const [relatedArtists, setRelatedArtists] = useState<Artist[]>([]);
   //
-  const { access_token } = useAuth();
+  const { toggleUserFollowedSomeone, access_token } = useAuth();
+  //
   const getArtist = async () => {
     const artistData = await serviceSpotify.getArtist(id!, access_token!!);
     setArtist(artistData);
@@ -56,6 +58,37 @@ export function ArtistPage() {
     setRelatedArtists(relatedArtistsData);
   };
 
+  const checkIfUserFollowsArtist = async () => {
+    const rta = await serviceSpotify.checkIfUser5FollowArtist(
+      id!!,
+      access_token!!
+    );
+    setUserFollowsArtist(rta[0]);
+  };
+
+  const handlerUnfollow = async () => {
+    try {
+      await serviceSpotify.unfollowArtist(id!!, access_token!!);
+      toggleFollow();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handlerFollow = async () => {
+    try {
+      await serviceSpotify.followArtist(id!!, access_token!!);
+      toggleFollow();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const toggleFollow = () => {
+    setUserFollowsArtist(!userFollowsArtist);
+    toggleUserFollowedSomeone();
+  };
+
   const scrollToTop = () => {
     if (blockRef.current) {
       //@ts-ignore
@@ -69,6 +102,7 @@ export function ArtistPage() {
     getAlbums();
     getTopTracks();
     getRelatedArtist();
+    checkIfUserFollowsArtist();
   }, [id, access_token]);
 
   const handlerAlbum = (albumID: string) => {
@@ -118,6 +152,13 @@ export function ArtistPage() {
       <Box ref={blockRef}>
         {/* Block ref necesario */}
         <TitleArtist text={artist.name}></TitleArtist>
+      </Box>
+      <Box sx={{ marginY: "10px" }}>
+        {userFollowsArtist ? (
+          <ButtonFollows text="Following" handler={handlerUnfollow} />
+        ) : (
+          <ButtonFollows text="Follow" handler={handlerFollow} />
+        )}
       </Box>
       <Box>
         <SubtitleArtist text="Popular" />
@@ -226,5 +267,30 @@ export function ArtistPage() {
         </Box>
       </Box>
     </Box>
+  );
+}
+
+function ButtonFollows({
+  text,
+  handler,
+}: {
+  text: string;
+  handler: () => void;
+}) {
+  return (
+    <Button
+      onClick={handler}
+      variant="outlined"
+      sx={{
+        color: "white",
+        borderColor: "white",
+        borderRadius: "50px",
+        "&:hover": {
+          borderColor: "gray",
+        },
+      }}
+    >
+      {text}
+    </Button>
   );
 }

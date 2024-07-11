@@ -1,13 +1,25 @@
 import { Box } from "@mui/material";
-import {
-  ButtonIconSmall,
-  ButtonOutlinedRoundedSmall,
-  ButtonWithLink,
-} from "../../ui/button";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import { ButtonOutlinedRoundedSmall, ButtonWithLink } from "../../ui/button";
 import GetAppIcon from "@mui/icons-material/GetApp";
 import { AvatarHeader } from "../../ui/avatar";
+import { useEffect, useState } from "react";
+import { serviceSpotify } from "../../services/service";
+import { useAuth } from "../../providers/auth/AuthContext";
+
 export function Header() {
+  const { access_token } = useAuth();
+  const [letter, setLetter] = useState<string>("?");
+
+  const getUserData = async () => {
+    const rta = await serviceSpotify.getUserData(access_token!!);
+    let letterC = rta.display_name[0];
+    setLetter(letterC);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, [access_token]);
+
   return (
     <Box
       sx={{
@@ -35,13 +47,10 @@ export function Header() {
           />
         }
       ></ButtonWithLink>
-      <ButtonIconSmall link="/" color="black" backgroundColorHover="#9effb6">
-        <NotificationsIcon />
-      </ButtonIconSmall>
       <AvatarHeader
         alt=""
         src=""
-        text="N"
+        text={letter}
         backgroundColor="var(--spotify-color)"
         backgroundColorHover="#9effb6"
       />

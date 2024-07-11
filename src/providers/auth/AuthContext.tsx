@@ -4,8 +4,10 @@ import React, { createContext, useState, useContext, ReactNode } from "react";
 interface AuthContextType {
   access_token: string | null;
   listo: boolean;
+  userFollowedSomeone: boolean;
   toggleListo: () => void;
   changeAccessToken: (value: string) => void;
+  toggleUserFollowedSomeone: () => void;
 }
 
 // Crea el contexto con un valor inicial
@@ -28,6 +30,9 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [listo, setListo] = useState<boolean>(true);
   const [access_token, setAccessToken] = useState<string | null>(null);
+  //posible refactor a otro auth
+  const [userFollowedSomeone, setUserFollowedSomeone] =
+    useState<boolean>(false);
 
   const toggleListo = () => {
     setListo(!listo);
@@ -37,9 +42,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setAccessToken(newValue);
   };
 
+  const toggleUserFollowedSomeone = () => {
+    setUserFollowedSomeone(!userFollowedSomeone);
+  };
+
   return (
     <AuthContext.Provider
-      value={{ listo, toggleListo, access_token, changeAccessToken }}
+      value={{
+        listo,
+        toggleListo,
+        access_token,
+        changeAccessToken,
+        userFollowedSomeone,
+        toggleUserFollowedSomeone,
+      }}
     >
       {children}
     </AuthContext.Provider>
