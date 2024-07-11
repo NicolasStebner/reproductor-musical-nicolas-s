@@ -21,7 +21,7 @@ export function SideBar() {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   /*  */
-  const { access_token } = useAuth();
+  const { userFollowedSomeone, access_token } = useAuth();
 
   const fetchData = async () => {
     const artists = await serviceSpotify.getArtistSideBar(access_token!!);
@@ -32,7 +32,7 @@ export function SideBar() {
 
   useEffect(() => {
     fetchData();
-  }, [access_token]);
+  }, [userFollowedSomeone, access_token]);
 
   useEffect(() => {
     filterArtists();
@@ -124,9 +124,6 @@ export function SideBar() {
                 <Subtitle text="Ingresar"></Subtitle>
               </Box>
             </Link>
-            <ButtonIconSmall>
-              <EastIcon />
-            </ButtonIconSmall>
           </Stack>
           {/* Grid con los artistas */}
           <Grid
