@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useAuth } from "../../providers/auth/AuthContext";
 import { AuthPageSecondary } from "./page";
+import { useNavigate } from "react-router-dom";
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
 export function AuthPage() {
   const { changeAccessToken, access_token } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getToken = async () => {
@@ -22,6 +24,7 @@ export function AuthPage() {
     getToken().then((data) => {
       if (data) {
         changeAccessToken(data);
+        navigate("/");
       }
     });
   });

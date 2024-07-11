@@ -87,7 +87,7 @@ export function MusicPlayer() {
       const interval = setInterval(() => {
         setDurationSong((prevState) => {
           if (prevState.progress >= prevState.durationComplete) {
-            all();
+            updateCurrentSong();
           }
           return {
             ...prevState,
