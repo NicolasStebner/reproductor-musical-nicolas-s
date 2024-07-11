@@ -2,8 +2,6 @@ import { Box, Grid, Stack, TextField } from "@mui/material";
 import { Subtitle } from "../../ui/text";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import EastIcon from "@mui/icons-material/East";
-import { ButtonIconSmall } from "../../ui/button";
 import { CardComp } from "../card-artist";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
