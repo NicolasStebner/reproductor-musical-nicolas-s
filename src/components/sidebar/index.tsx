@@ -121,7 +121,7 @@ export function SideBar() {
             <Link to="/auth" className="link">
               <Box sx={{ display: "flex", gap: 1 }}>
                 <AccountBoxIcon />
-                <Subtitle text="Ingresar"></Subtitle>
+                <Subtitle text="Log In"></Subtitle>
               </Box>
             </Link>
           </Stack>

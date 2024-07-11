@@ -155,9 +155,9 @@ export function ArtistPage() {
       </Box>
       <Box sx={{ marginY: "10px" }}>
         {userFollowsArtist ? (
-          <ButtonFollows text="Siguiendo" handler={handlerUnfollow} />
+          <ButtonFollows text="Following" handler={handlerUnfollow} />
         ) : (
-          <ButtonFollows text="Seguir" handler={handlerFollow} />
+          <ButtonFollows text="Follow" handler={handlerFollow} />
         )}
       </Box>
       <Box>
