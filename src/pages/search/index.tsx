@@ -20,7 +20,8 @@ const ITEMS_PER_PAGE = 6; // Cambia esto al número de items por página que pre
 export function SearchPage() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [query, setQuery] = useState("");
+  const [auxiliaryQuery, setAuxiliaryQuery] = useState("");
+  const [query, setQuery] = useState(auxiliaryQuery);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [tracks, setTracks] = useState<TrackItem[]>([]);
   const [artists, setArtists] = useState<Artist[]>([]);
@@ -34,6 +35,7 @@ export function SearchPage() {
   useEffect(() => {
     const getData = async () => {
       if (query != "") {
+        setIsLoading(true);
         const artistsFetched = await serviceSpotify.searchByType(
           query,
           "artist",
@@ -59,6 +61,17 @@ export function SearchPage() {
     getData();
   }, [query, access_token]);
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setQuery(auxiliaryQuery);
+    }, 1000);
+
+    // Cleanup function to clear the timeout if searchTerm changes before the delay
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [auxiliaryQuery]);
+
   const handlerAlbum = (albumID: string) => {
     navigate("/album/" + albumID);
   };
@@ -70,7 +83,7 @@ export function SearchPage() {
   };
 
   const handlerChange = (event: any) => {
-    setQuery(event.target.value);
+    setAuxiliaryQuery(event.target.value);
     setSearchTouched(true);
   };
   /*  */
@@ -110,7 +123,7 @@ export function SearchPage() {
           onBlur={() => {
             setQuery("");
           }}
-          value={query}
+          value={auxiliaryQuery}
           autoFocus
           placeholder="Search Artist"
           variant="outlined"

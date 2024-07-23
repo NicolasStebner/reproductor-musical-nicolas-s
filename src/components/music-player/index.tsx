@@ -198,36 +198,41 @@ export function MusicPlayer() {
               <Loading />
             </Box>
           ) : (
-            <DelayComponent delay={150}>
-              <Stack
-                direction={"row"}
-                sx={{
-                  alignItems: "space-between",
-                  minWidth: "20%",
-                }}
-              >
-                <CardMedia
-                  component="img"
+            <Box
+              sx={{
+                minWidth: "20%",
+              }}
+            >
+              <DelayComponent delay={150}>
+                <Stack
+                  direction={"row"}
                   sx={{
-                    maxHeight: "70px",
-                    maxWidth: "70px",
-                    borderRadius: "5px",
+                    alignItems: "space-between",
                   }}
-                  image={artist.image}
-                  alt={artist.alt}
-                />
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
-                  <CardContent sx={{ flex: "1 0 auto" }}>
-                    <Box onClick={() => navigate("/album/" + idAlbum)}>
-                      <TitlePlayer text={artist.nameSong} />
-                    </Box>
-                    <Box onClick={() => navigate("/artist/" + idArtist)}>
-                      <SubtitlePlayer text={artist.artistName} />
-                    </Box>
-                  </CardContent>
-                </Box>
-              </Stack>
-            </DelayComponent>
+                >
+                  <CardMedia
+                    component="img"
+                    sx={{
+                      maxHeight: "70px",
+                      maxWidth: "70px",
+                      borderRadius: "5px",
+                    }}
+                    image={artist.image}
+                    alt={artist.alt}
+                  />
+                  <Box sx={{ display: "flex", flexDirection: "column" }}>
+                    <CardContent sx={{ flex: "1 0 auto" }}>
+                      <Box onClick={() => navigate("/album/" + idAlbum)}>
+                        <TitlePlayer text={artist.nameSong} />
+                      </Box>
+                      <Box onClick={() => navigate("/artist/" + idArtist)}>
+                        <SubtitlePlayer text={artist.artistName} />
+                      </Box>
+                    </CardContent>
+                  </Box>
+                </Stack>
+              </DelayComponent>
+            </Box>
           )}
           {/* Display de reproduccion */}
           <Box
