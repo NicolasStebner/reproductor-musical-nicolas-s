@@ -7,6 +7,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { TopTrackItem } from "../../domain/topTrackItem";
+import { DelayComponent } from "../delay";
 
 export function TableTrackItem({ topTracks }: { topTracks: TopTrackItem[] }) {
   return (
@@ -32,25 +33,33 @@ export function TableTrackItem({ topTracks }: { topTracks: TopTrackItem[] }) {
                 component="th"
                 scope="row"
               >
-                {index + 1}
+                <DelayComponent key={index} delay={index * 100}>
+                  {index + 1}
+                </DelayComponent>
               </TableCell>
               <TableCell
                 sx={{ color: "white", borderBottom: "none" }}
                 align="left"
               >
-                <Avatar src={t.album.images[0].url}></Avatar>
+                <DelayComponent key={index} delay={index * 100}>
+                  <Avatar src={t.album.images[0].url}></Avatar>
+                </DelayComponent>
               </TableCell>
               <TableCell
                 sx={{ color: "white", borderBottom: "none" }}
                 align="left"
               >
-                {t.name}
+                <DelayComponent key={index} delay={index * 100}>
+                  {t.name}
+                </DelayComponent>
               </TableCell>
               <TableCell
                 sx={{ color: "white", borderBottom: "none" }}
                 align="right"
               >
-                {t.getDuration()}
+                <DelayComponent key={index} delay={index * 100}>
+                  {t.getDuration()}
+                </DelayComponent>
               </TableCell>
             </TableRow>
           ))}

@@ -10,6 +10,7 @@ import { serviceSpotify } from "../../services/service";
 import { Loading } from "../loading";
 import { useAuth } from "../../providers/auth/AuthContext";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import { DelayComponent } from "../delay";
 
 export function SideBar() {
   const [isLoading, setIsLoading] = useState(true);
@@ -168,7 +169,7 @@ export function SideBar() {
             {isLoading ? (
               <Loading />
             ) : (
-              artistsFiltred.map((a) => {
+              artistsFiltred.map((a, index) => {
                 return (
                   <Grid
                     item
@@ -176,15 +177,17 @@ export function SideBar() {
                     key={a.id}
                     onClick={() => handlerArtist(a.id)}
                   >
-                    <CardComp
-                      key={a.id}
-                      avatar={{
-                        src: `${a.images[0].url}`,
-                        alt: `${a.name}`,
-                      }}
-                      title={a.name}
-                      subtitle={a.type}
-                    />
+                    <DelayComponent key={index} delay={index * 100}>
+                      <CardComp
+                        key={a.id}
+                        avatar={{
+                          src: `${a.images[0].url}`,
+                          alt: `${a.name}`,
+                        }}
+                        title={a.name}
+                        subtitle={a.type}
+                      />
+                    </DelayComponent>
                   </Grid>
                 );
               })

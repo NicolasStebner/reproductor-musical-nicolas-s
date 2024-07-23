@@ -7,6 +7,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { TrackItem } from "../../domain/trackItem";
+import { DelayComponent } from "../delay";
 
 export function GridTrackAlbum({ tracks }: { tracks: TrackItem[] }) {
   return (
@@ -46,19 +47,25 @@ export function GridTrackAlbum({ tracks }: { tracks: TrackItem[] }) {
                 component="th"
                 scope="row"
               >
-                {index + 1}
+                <DelayComponent key={index} delay={index * 200}>
+                  {index + 1}
+                </DelayComponent>
               </TableCell>
               <TableCell
                 sx={{ color: "white", borderBottom: "none" }}
                 align="left"
               >
-                {t.name}
+                <DelayComponent key={index} delay={index * 200}>
+                  {t.name}
+                </DelayComponent>
               </TableCell>
               <TableCell
                 sx={{ color: "white", borderBottom: "none" }}
                 align="right"
               >
-                {t.getDuration()}
+                <DelayComponent key={index} delay={index * 200}>
+                  {t.getDuration()}
+                </DelayComponent>
               </TableCell>
             </TableRow>
           ))}

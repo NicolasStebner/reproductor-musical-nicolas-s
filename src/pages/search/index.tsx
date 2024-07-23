@@ -13,6 +13,7 @@ import { Loading } from "../../components/loading";
 import { SearchTitle, TextHelp } from "../../ui/text";
 import { TopArtist } from "../../components/top-artist";
 import { useAuth } from "../../providers/auth/AuthContext";
+import { DelayComponent } from "../../components/delay";
 
 const ITEMS_PER_PAGE = 6; // Cambia esto al número de items por página que prefieras
 
@@ -154,7 +155,7 @@ export function SearchPage() {
               </Box>
               <Box>
                 <GridAlbumArtists>
-                  {paginatedAlbums.map((a) => {
+                  {paginatedAlbums.map((a, index) => {
                     return (
                       <Grid
                         item
@@ -162,14 +163,18 @@ export function SearchPage() {
                         key={a.id}
                         onClick={() => handlerAlbum(a.id)}
                       >
-                        <CardAlbum
-                          key={a.id}
-                          image={a.images[0].url}
-                          title={a.name}
-                          description={
-                            a.getReleaseYear().toString() + " • " + a.album_type
-                          }
-                        />
+                        <DelayComponent key={index} delay={index * 100}>
+                          <CardAlbum
+                            key={a.id}
+                            image={a.images[0].url}
+                            title={a.name}
+                            description={
+                              a.getReleaseYear().toString() +
+                              " • " +
+                              a.album_type
+                            }
+                          />
+                        </DelayComponent>
                       </Grid>
                     );
                   })}
@@ -193,7 +198,7 @@ export function SearchPage() {
               </Box>
               <Box>
                 <GridAlbumArtists>
-                  {paginatedArtists.map((a) => {
+                  {paginatedArtists.map((a, index) => {
                     return (
                       <Grid
                         item
@@ -201,15 +206,17 @@ export function SearchPage() {
                         key={a.id}
                         onClick={() => handlerArtist(a.id)}
                       >
-                        <CardComp
-                          key={a.id}
-                          avatar={{
-                            src: `${a.images[0]?.url}`,
-                            alt: `${a.name}`,
-                          }}
-                          title={a.name}
-                          subtitle={a.type}
-                        />
+                        <DelayComponent key={index} delay={index * 100}>
+                          <CardComp
+                            key={a.id}
+                            avatar={{
+                              src: `${a.images[0]?.url}`,
+                              alt: `${a.name}`,
+                            }}
+                            title={a.name}
+                            subtitle={a.type}
+                          />
+                        </DelayComponent>
                       </Grid>
                     );
                   })}
@@ -242,7 +249,9 @@ export function SearchPage() {
           alignItems={"center"}
           sx={{ marginBottom: "100px", minHeight: "300px" }}
         >
-          <TextHelp text="Search your favourite artist."></TextHelp>
+          <DelayComponent delay={200}>
+            <TextHelp text="Search your favourite artist."></TextHelp>
+          </DelayComponent>
         </Box>
       )}
     </Box>

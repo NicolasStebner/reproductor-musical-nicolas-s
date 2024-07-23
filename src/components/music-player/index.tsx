@@ -25,6 +25,7 @@ import ShuffleIcon from "@mui/icons-material/Shuffle";
 import ShuffleOnIcon from "@mui/icons-material/ShuffleOn";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import RepeatOneIcon from "@mui/icons-material/RepeatOne";
+import { DelayComponent } from "../delay";
 
 export function MusicPlayer() {
   const [playbackState, setPlaybackState] = useState<playbackType | null>(null);
@@ -197,38 +198,44 @@ export function MusicPlayer() {
               <Loading />
             </Box>
           ) : (
-            <Stack
-              direction={"row"}
-              sx={{
-                alignItems: "space-between",
-                minWidth: "20%",
-              }}
-            >
-              <CardMedia
-                component="img"
+            <DelayComponent delay={150}>
+              <Stack
+                direction={"row"}
                 sx={{
-                  maxHeight: "70px",
-                  maxWidth: "70px",
-                  borderRadius: "5px",
+                  alignItems: "space-between",
+                  minWidth: "20%",
                 }}
-                image={artist.image}
-                alt={artist.alt}
-              />
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <CardContent sx={{ flex: "1 0 auto" }}>
-                  <Box onClick={() => navigate("/album/" + idAlbum)}>
-                    <TitlePlayer text={artist.nameSong} />
-                  </Box>
-                  <Box onClick={() => navigate("/artist/" + idArtist)}>
-                    <SubtitlePlayer text={artist.artistName} />
-                  </Box>
-                </CardContent>
-              </Box>
-            </Stack>
+              >
+                <CardMedia
+                  component="img"
+                  sx={{
+                    maxHeight: "70px",
+                    maxWidth: "70px",
+                    borderRadius: "5px",
+                  }}
+                  image={artist.image}
+                  alt={artist.alt}
+                />
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                  <CardContent sx={{ flex: "1 0 auto" }}>
+                    <Box onClick={() => navigate("/album/" + idAlbum)}>
+                      <TitlePlayer text={artist.nameSong} />
+                    </Box>
+                    <Box onClick={() => navigate("/artist/" + idArtist)}>
+                      <SubtitlePlayer text={artist.artistName} />
+                    </Box>
+                  </CardContent>
+                </Box>
+              </Stack>
+            </DelayComponent>
           )}
           {/* Display de reproduccion */}
           <Box
-            sx={{ display: "flex", minWidth: "600px", flexDirection: "column" }}
+            sx={{
+              display: "flex",
+              minWidth: "600px",
+              flexDirection: "column",
+            }}
           >
             <Stack
               direction={"row"}
