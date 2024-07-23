@@ -68,10 +68,7 @@ export function Home() {
             <Box display={"inline"} marginLeft={"3px"}>
               y
             </Box>
-            <FrameworkRedirect
-              href="https://v2.chakra-ui.com"
-              text="ChakraUI."
-            />
+            <FrameworkRedirect href="https://mui.com" text="MaterialUI." />
           </Typography>
         </Box>
       </DelayComponent>
