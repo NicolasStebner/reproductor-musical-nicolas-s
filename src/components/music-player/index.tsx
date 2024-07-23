@@ -21,6 +21,10 @@ import { playbackType } from "../../types/player";
 import { msToMinutesWithSeconds } from "../../util/milisegundosAMinutosConSegundos";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../providers/auth/AuthContext";
+import ShuffleIcon from "@mui/icons-material/Shuffle";
+import ShuffleOnIcon from "@mui/icons-material/ShuffleOn";
+import RepeatIcon from "@mui/icons-material/Repeat";
+import RepeatOneIcon from "@mui/icons-material/RepeatOne";
 
 export function MusicPlayer() {
   const [playbackState, setPlaybackState] = useState<playbackType | null>(null);
@@ -39,6 +43,13 @@ export function MusicPlayer() {
     progress: 0,
     durationComplete: 0,
   });
+  const [shuffleState, setShuffleState] = useState(false);
+  const [repeatState, setRepeatState] = useState<
+    "off" | "context" | "track" | undefined
+  >(undefined);
+  /*  */
+
+  /*  */
   const navigate = useNavigate();
   /*  */
   const { access_token } = useAuth();
@@ -62,6 +73,8 @@ export function MusicPlayer() {
         progress: playbackStateFetched.progress_ms,
         durationComplete: playbackStateFetched.item.duration_ms,
       });
+      setShuffleState(playbackStateFetched.shuffle_state);
+      setRepeatState(playbackStateFetched?.repeat_state);
     };
 
     const changeArtist = async () => {
@@ -145,6 +158,24 @@ export function MusicPlayer() {
     );
   };
 
+  const handlerShuffleMusic = async () => {
+    try {
+      await serviceSpotify.shuffleChange(!shuffleState, access_token!!);
+      setShuffleState(!shuffleState);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handlerRepeat = async (newState: any) => {
+    try {
+      await serviceSpotify.repeatModeChange(newState, access_token!!);
+      setRepeatState(newState);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <>
       {playbackState?.is_playing ? (
@@ -203,6 +234,27 @@ export function MusicPlayer() {
               direction={"row"}
               sx={{ display: "flex", justifyContent: "center" }}
             >
+              {shuffleState ? (
+                <IconButton
+                  aria-label="previous"
+                  onClick={() => handlerShuffleMusic()}
+                >
+                  <ShuffleOnIcon
+                    fontSize="small"
+                    sx={{ color: "var(--spotify-color)" }}
+                  />
+                </IconButton>
+              ) : (
+                <IconButton
+                  aria-label="previous"
+                  onClick={() => handlerShuffleMusic()}
+                >
+                  <ShuffleIcon
+                    fontSize="small"
+                    sx={{ color: "var(--font-color)" }}
+                  />
+                </IconButton>
+              )}
               <IconButton
                 aria-label="previous"
                 onClick={() => handlerPreviousSong()}
@@ -233,6 +285,10 @@ export function MusicPlayer() {
                   sx={{ color: "var(--font-color)" }}
                 />
               </IconButton>
+              <RepeatStateComponent
+                repeatState={repeatState}
+                handlerChange={handlerRepeat}
+              />
             </Stack>
             <Box display={"flex"} alignItems={"center"} gap={2}>
               {msToMinutesWithSeconds(durationSong.progress)}
@@ -322,5 +378,55 @@ const Volume = ({ volume, handlerVolume }: VolumeType) => {
         },
       }}
     />
+  );
+};
+
+const repeatConfig = {
+  off: {
+    icon: RepeatIcon,
+    color: "var(--font-color)",
+  },
+  context: {
+    icon: RepeatIcon,
+    color: "var(--spotify-color)",
+  },
+  track: {
+    icon: RepeatOneIcon,
+    color: "var(--spotify-color)",
+  },
+};
+
+const nextRepeatState = {
+  off: "context",
+  context: "track",
+  track: "off",
+};
+
+type repeatStateComponentType = {
+  repeatState: "off" | "context" | "track" | undefined;
+  handlerChange: (newState: string) => void;
+};
+
+const RepeatStateComponent = ({
+  repeatState,
+  handlerChange,
+}: repeatStateComponentType) => {
+  const [repeatStateIntern, setRepeatState] = useState<
+    "off" | "context" | "track" | undefined
+  >(repeatState);
+
+  const handleNextSong = () => {
+    //@ts-ignore
+    handlerChange(nextRepeatState[repeatStateIntern]);
+    //@ts-ignore
+    setRepeatState(nextRepeatState[repeatStateIntern]);
+  };
+  //@ts-ignore
+  const { icon: Icon, color } = repeatConfig[repeatState];
+
+  return (
+    <IconButton aria-label="next" onClick={handleNextSong}>
+      <Icon fontSize="small" sx={{ color: color }} />
+    </IconButton>
   );
 };

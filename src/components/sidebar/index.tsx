@@ -66,7 +66,7 @@ export function SideBar() {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        gap: "10px",
+        justifyContent: "space-between",
       }}
     >
       {/* Primera parte del SideBar */}
@@ -97,10 +97,9 @@ export function SideBar() {
       {/* Segunda parte del SideBar  */}
       <Box
         sx={{
-          maxHeight: "80%",
+          maxHeight: "85%",
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
         }}
       >
         <Box
@@ -113,6 +112,7 @@ export function SideBar() {
             flexDirection: "column",
             gap: "20px",
             borderRadius: "8px",
+            boxSizing: "border-box",
           }}
         >
           <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>

@@ -23,10 +23,13 @@ export function GridSongs({ songs }: { songs: TrackItem[] }) {
               sx={{
                 backgroundColor: "var(--onyx-gray)",
                 "&:last-child td, &:last-child th": { border: 0 },
+                "&:hover": {
+                  backgroundColor: "var(--hover-color-gray)",
+                },
               }}
             >
               <TableCell
-                sx={{ color: "white", borderBottom: "none", paddingLeft: 0 }}
+                sx={{ color: "white", borderBottom: "none" }}
                 align="left"
               >
                 <Box display="flex" flexDirection={"column"}>

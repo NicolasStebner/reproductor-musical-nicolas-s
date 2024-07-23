@@ -79,7 +79,7 @@ export type playbackType = {
     uri: string;
   };
   progress_ms: number;
-  repeat_state: string;
+  repeat_state: "off" | "context" | "track" | undefined;
   shuffle_state: boolean;
   smart_shuffle: boolean;
   timestamp: number;
