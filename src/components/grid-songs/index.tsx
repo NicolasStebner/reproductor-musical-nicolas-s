@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { TrackItem } from "../../domain/trackItem";
 import { SearchSubtitleSong, SearchTitleSong } from "../../ui/text";
+import { DelayComponent } from "../delay";
 
 export function GridSongs({ songs }: { songs: TrackItem[] }) {
   return (
@@ -17,7 +18,7 @@ export function GridSongs({ songs }: { songs: TrackItem[] }) {
         aria-label="simple table"
       >
         <TableBody>
-          {songs?.map((t) => (
+          {songs?.map((t, index) => (
             <TableRow
               key={t.id}
               sx={{
@@ -32,16 +33,20 @@ export function GridSongs({ songs }: { songs: TrackItem[] }) {
                 sx={{ color: "white", borderBottom: "none" }}
                 align="left"
               >
-                <Box display="flex" flexDirection={"column"}>
-                  <SearchTitleSong text={t.name} />
-                  <SearchSubtitleSong text={t.artists[0]?.name} />
-                </Box>
+                <DelayComponent key={index} delay={index * 200}>
+                  <Box display="flex" flexDirection={"column"}>
+                    <SearchTitleSong text={t.name} />
+                    <SearchSubtitleSong text={t.artists[0]?.name} />
+                  </Box>
+                </DelayComponent>
               </TableCell>
               <TableCell
                 sx={{ color: "white", borderBottom: "none" }}
                 align="right"
               >
-                {t.getDuration()}
+                <DelayComponent key={index} delay={index * 200}>
+                  {t.getDuration()}
+                </DelayComponent>
               </TableCell>
             </TableRow>
           ))}

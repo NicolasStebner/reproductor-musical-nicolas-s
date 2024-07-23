@@ -11,6 +11,7 @@ import { GridAlbumArtists } from "../../components/grid-album-artists";
 import { CardComp } from "../../components/card-artist";
 import { TopTrackItem } from "../../domain/topTrackItem";
 import { useAuth } from "../../providers/auth/AuthContext";
+import { DelayComponent } from "../../components/delay";
 
 const ITEMS_PER_PAGE = 6; // Cambia esto al número de items por página que prefieras
 
@@ -178,7 +179,7 @@ export function ArtistPage() {
             }}
           >
             <GridAlbumArtists>
-              {paginatedAlbums.map((a) => {
+              {paginatedAlbums.map((a, index) => {
                 return (
                   <Grid
                     item
@@ -186,14 +187,16 @@ export function ArtistPage() {
                     key={a.id}
                     onClick={() => handlerAlbum(a.id)}
                   >
-                    <CardAlbum
-                      key={a.id}
-                      image={a.images[0].url}
-                      title={a.name}
-                      description={
-                        a.getReleaseYear().toString() + " • " + a.album_type
-                      }
-                    />
+                    <DelayComponent key={index} delay={index * 200}>
+                      <CardAlbum
+                        key={a.id}
+                        image={a.images[0].url}
+                        title={a.name}
+                        description={
+                          a.getReleaseYear().toString() + " • " + a.album_type
+                        }
+                      />
+                    </DelayComponent>
                   </Grid>
                 );
               })}
@@ -227,7 +230,7 @@ export function ArtistPage() {
             }}
           >
             <GridAlbumArtists>
-              {paginatedArtists.map((a) => {
+              {paginatedArtists.map((a, index) => {
                 return (
                   <Grid
                     item
@@ -235,15 +238,17 @@ export function ArtistPage() {
                     key={a.id}
                     onClick={() => handlerArtist(a.id)}
                   >
-                    <CardComp
-                      key={a.id}
-                      avatar={{
-                        alt: "",
-                        src: `${a.images[0].url}`,
-                      }}
-                      title={a.name}
-                      subtitle={a.type}
-                    />
+                    <DelayComponent key={index} delay={index * 200}>
+                      <CardComp
+                        key={a.id}
+                        avatar={{
+                          alt: "",
+                          src: `${a.images[0].url}`,
+                        }}
+                        title={a.name}
+                        subtitle={a.type}
+                      />
+                    </DelayComponent>
                   </Grid>
                 );
               })}

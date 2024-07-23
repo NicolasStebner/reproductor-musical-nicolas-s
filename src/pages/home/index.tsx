@@ -1,88 +1,98 @@
 import { Avatar, Box, Button, Stack, Typography } from "@mui/material";
 import NicolasPNG from "../../assets/nicolas.jpg";
+import { DelayComponent } from "../../components/delay";
 
 export function Home() {
   return (
     <Box>
-      <Box fontSize="2xl" fontWeight="bold">
-        <Typography
-          variant="h3"
-          textAlign={"center"}
-          color={"var(--spotify-color)"}
-        >
-          SPOTIFY REMOTE CONTROL
-        </Typography>
-      </Box>
-
-      <Box mt={4} fontSize="xl">
-        <Typography variant="h4" color={"var(--spotify-color)"}>
-          Sobre el Proyecto
-        </Typography>
-      </Box>
-      <Box mt={2}>
-        <Typography variant="subtitle1" gutterBottom>
-          Spotify Remote Control es una aplicación diseñada para proporcionar
-          control remoto sobre la música que se está reproduciendo en tu
-          dispositivo. Ofrece funcionalidades como cambiar de canción, ajustar
-          el volumen y más. Además, permite buscar artistas, álbumes y otras
-          categorías de contenido.
-        </Typography>
-      </Box>
-
-      <Box mt={4} fontSize="xl" fontWeight="semibold">
-        <Typography variant="h4" color={"var(--spotify-color)"}>
-          Objetivos
-        </Typography>
-      </Box>
-      <Box mt={2}>
-        <Typography variant="subtitle1" gutterBottom>
-          El objetivo principal de este proyecto es aprovechar la API WEB de
-          Spotify. A través de diversos endpoints, podemos realizar
-          modificaciones en la reproducción de música y obtener información
-          relevante, mejorando así la experiencia del usuario.
-        </Typography>
-      </Box>
-
-      <Box mt={4} fontSize="xl" fontWeight="semibold">
-        <Typography variant="h4" color={"var(--spotify-color)"}>
-          Herramientas
-        </Typography>
-      </Box>
-      <Box mt={2}>
-        <Typography variant="subtitle1" gutterBottom>
-          Las tecnologías utilizadas en el desarrollo de esta aplicación
-          incluyen
-          <FrameworkRedirect href="https://es.react.dev" text="React" />
-          <Box display={"inline"} marginLeft={"3px"}>
-            ,
-          </Box>
-          <FrameworkRedirect
-            href="https://www.typescriptlang.org"
-            text="TypeScript"
-          />
-          <Box display={"inline"} marginLeft={"3px"}>
-            y
-          </Box>
-          <FrameworkRedirect href="https://v2.chakra-ui.com" text="ChakraUI." />
-        </Typography>
-      </Box>
-
-      <Box mt={4} fontSize="xl" fontWeight="semibold">
-        <Typography variant="h4" color={"var(--spotify-color)"}>
-          Desarrollador
-        </Typography>
-      </Box>
-      <Box mt={2}>
-        <Typography variant="subtitle1" gutterBottom>
-          <ProfileCard
-            photo={NicolasPNG}
-            name="Nicolas Stebner"
-            role="Dev. FullStack"
-            portfolio="https://nicolasalejandrostebner.vercel.app"
-            linkedIn="https://www.linkedIn.com/in/nicolas-stebner/"
-          />
-        </Typography>
-      </Box>
+      <DelayComponent delay={100}>
+        <Box fontSize="2xl" fontWeight="bold">
+          <Typography
+            variant="h3"
+            textAlign={"center"}
+            color={"var(--spotify-color)"}
+          >
+            SPOTIFY REMOTE CONTROL
+          </Typography>
+        </Box>
+      </DelayComponent>
+      <DelayComponent delay={200}>
+        <Box mt={4} fontSize="xl">
+          <Typography variant="h4" color={"var(--spotify-color)"}>
+            Sobre el Proyecto
+          </Typography>
+        </Box>
+        <Box mt={2}>
+          <Typography variant="subtitle1" gutterBottom>
+            Spotify Remote Control es una aplicación diseñada para proporcionar
+            control remoto sobre la música que se está reproduciendo en tu
+            dispositivo. Ofrece funcionalidades como cambiar de canción, ajustar
+            el volumen y más. Además, permite buscar artistas, álbumes y otras
+            categorías de contenido.
+          </Typography>
+        </Box>
+      </DelayComponent>
+      <DelayComponent delay={300}>
+        <Box mt={4} fontSize="xl" fontWeight="semibold">
+          <Typography variant="h4" color={"var(--spotify-color)"}>
+            Objetivos
+          </Typography>
+        </Box>
+        <Box mt={2}>
+          <Typography variant="subtitle1" gutterBottom>
+            El objetivo principal de este proyecto es aprovechar la API WEB de
+            Spotify. A través de diversos endpoints, podemos realizar
+            modificaciones en la reproducción de música y obtener información
+            relevante, mejorando así la experiencia del usuario.
+          </Typography>
+        </Box>
+      </DelayComponent>
+      <DelayComponent delay={400}>
+        <Box mt={4} fontSize="xl" fontWeight="semibold">
+          <Typography variant="h4" color={"var(--spotify-color)"}>
+            Herramientas
+          </Typography>
+        </Box>
+        <Box mt={2}>
+          <Typography variant="subtitle1" gutterBottom>
+            Las tecnologías utilizadas en el desarrollo de esta aplicación
+            incluyen
+            <FrameworkRedirect href="https://es.react.dev" text="React" />
+            <Box display={"inline"} marginLeft={"3px"}>
+              ,
+            </Box>
+            <FrameworkRedirect
+              href="https://www.typescriptlang.org"
+              text="TypeScript"
+            />
+            <Box display={"inline"} marginLeft={"3px"}>
+              y
+            </Box>
+            <FrameworkRedirect
+              href="https://v2.chakra-ui.com"
+              text="ChakraUI."
+            />
+          </Typography>
+        </Box>
+      </DelayComponent>
+      <DelayComponent delay={500}>
+        <Box mt={4} fontSize="xl" fontWeight="semibold">
+          <Typography variant="h4" color={"var(--spotify-color)"}>
+            Desarrollador
+          </Typography>
+        </Box>
+        <Box mt={2}>
+          <Typography variant="subtitle1" gutterBottom>
+            <ProfileCard
+              photo={NicolasPNG}
+              name="Nicolas Stebner"
+              role="Dev. FullStack"
+              portfolio="https://nicolasalejandrostebner.vercel.app"
+              linkedIn="https://www.linkedIn.com/in/nicolas-stebner/"
+            />
+          </Typography>
+        </Box>
+      </DelayComponent>
     </Box>
   );
 }
