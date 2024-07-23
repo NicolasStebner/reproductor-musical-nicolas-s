@@ -222,6 +222,26 @@ class Service{
       },
     })
   }
+
+  async shuffleChange(newState:boolean,access_token:string){
+    await axios({
+      method:"put",
+      url:`${API_URL}/me/player/shuffle?state=${newState}`,
+      headers:{
+        'Authorization': 'Bearer ' + access_token
+      },
+    })
+  }
+
+  async repeatModeChange(newState:string,access_token:string){
+    await axios({
+      method:"put",
+      url:`${API_URL}/me/player/repeat?state=${newState}`,
+      headers:{
+        'Authorization': 'Bearer ' + access_token
+      },
+    })
+  }
 }
 
 export const serviceSpotify = new Service()
