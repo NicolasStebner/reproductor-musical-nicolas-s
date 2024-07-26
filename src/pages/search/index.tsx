@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { CardComp } from "../../components/card-artist";
 import { GridSongs } from "../../components/grid-songs";
 import { Loading } from "../../components/loading";
-import { SearchTitle, TextHelp } from "../../ui/text";
+import { SearchTitle, SubtitleArtist, TextHelp } from "../../ui/text";
 import { TopArtist } from "../../components/top-artist";
 import { useAuth } from "../../providers/auth/AuthContext";
 import { DelayComponent } from "../../components/delay";
@@ -167,6 +167,7 @@ export function SearchPage() {
                 </Box>
               </Box>
               <Box>
+                <SubtitleArtist text="Discography" />
                 <GridAlbumArtists>
                   {paginatedAlbums.map((a, index) => {
                     return (
@@ -210,6 +211,7 @@ export function SearchPage() {
                 />
               </Box>
               <Box>
+                <SubtitleArtist text="Other Artists" />
                 <GridAlbumArtists>
                   {paginatedArtists.map((a, index) => {
                     return (
