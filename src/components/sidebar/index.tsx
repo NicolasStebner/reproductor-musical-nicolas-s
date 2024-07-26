@@ -117,12 +117,19 @@ export function SideBar() {
           }}
         >
           <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
-            <Link to="/auth" className="link">
+            {access_token ? (
               <Box sx={{ display: "flex", gap: 1 }}>
                 <AccountBoxIcon />
-                <Subtitle text="Log In"></Subtitle>
+                <Subtitle text="Logged"></Subtitle>
               </Box>
-            </Link>
+            ) : (
+              <Link to="/auth" className="link">
+                <Box sx={{ display: "flex", gap: 1 }}>
+                  <AccountBoxIcon />
+                  <Subtitle text="Log In"></Subtitle>
+                </Box>
+              </Link>
+            )}
           </Stack>
           {/* Grid con los artistas */}
           <Grid
@@ -135,12 +142,15 @@ export function SideBar() {
                 <Box
                   onClick={toggleIsSearching}
                   sx={{
+                    display: "flex",
+                    gap: "5px",
                     "&:hover": {
                       cursor: "pointer",
                     },
                   }}
                 >
                   <SearchOutlinedIcon></SearchOutlinedIcon>
+                  <Subtitle text="Search in your library"></Subtitle>
                 </Box>
               ) : (
                 <>

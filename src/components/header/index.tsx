@@ -9,9 +9,12 @@ import { useAuth } from "../../providers/auth/AuthContext";
 export function Header() {
   const { access_token } = useAuth();
   const [letter, setLetter] = useState<string>("?");
+  const [photo, setPhoto] = useState<string>("");
 
   const getUserData = async () => {
     const rta = await serviceSpotify.getUserData(access_token!!);
+    console.log(rta);
+    setPhoto(rta.images[0].url);
     let letterC = rta.display_name[0];
     setLetter(letterC);
   };
@@ -49,7 +52,7 @@ export function Header() {
       ></ButtonWithLink>
       <AvatarHeader
         alt=""
-        src=""
+        src={photo}
         text={letter}
         backgroundColor="var(--spotify-color)"
         backgroundColorHover="#9effb6"
