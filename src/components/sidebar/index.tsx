@@ -157,8 +157,9 @@ export function SideBar() {
                   <TextField
                     size="small"
                     onBlur={() => {
-                      setSearchQuery("");
-                      toggleIsSearching();
+                      if (searchQuery == "") {
+                        toggleIsSearching();
+                      }
                     }}
                     value={searchQuery}
                     autoFocus
@@ -172,7 +173,7 @@ export function SideBar() {
                         borderBottomColor: "var(--spotify-color)",
                       },
                     }}
-                  ></TextField>
+                  />
                 </>
               )}
             </Grid>
