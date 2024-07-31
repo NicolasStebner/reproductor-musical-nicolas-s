@@ -13,7 +13,7 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import VolumeDownIcon from "@mui/icons-material/VolumeDown";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
-import { SubtitlePlayer, TextHelp, TitlePlayer } from "../../ui/text";
+import { SubtitlePlayer, TitlePlayer } from "../../ui/text";
 import { serviceSpotify } from "../../services/service";
 import { useEffect, useState } from "react";
 import PauseIcon from "@mui/icons-material/Pause";
