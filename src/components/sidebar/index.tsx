@@ -1,4 +1,4 @@
-import { Box, Grid, Stack, TextField } from "@mui/material";
+import { Box, Grid, TextField } from "@mui/material";
 import { Subtitle } from "../../ui/text";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -9,7 +9,6 @@ import { Artist } from "../../domain/artist";
 import { serviceSpotify } from "../../services/service";
 import { Loading } from "../loading";
 import { useAuth } from "../../providers/auth/AuthContext";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { DelayComponent } from "../delay";
 
 export function SideBar() {
@@ -116,21 +115,6 @@ export function SideBar() {
             boxSizing: "border-box",
           }}
         >
-          <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
-            {access_token ? (
-              <Box sx={{ display: "flex", gap: 1 }}>
-                <AccountBoxIcon />
-                <Subtitle text="Logged"></Subtitle>
-              </Box>
-            ) : (
-              <Link to="/auth" className="link">
-                <Box sx={{ display: "flex", gap: 1 }}>
-                  <AccountBoxIcon />
-                  <Subtitle text="Log In"></Subtitle>
-                </Box>
-              </Link>
-            )}
-          </Stack>
           {/* Grid con los artistas */}
           <Grid
             container
@@ -144,6 +128,7 @@ export function SideBar() {
                   sx={{
                     display: "flex",
                     gap: "5px",
+                    marginBottom: "5px",
                     "&:hover": {
                       cursor: "pointer",
                     },
@@ -153,28 +138,26 @@ export function SideBar() {
                   <Subtitle text="Search in your library"></Subtitle>
                 </Box>
               ) : (
-                <>
-                  <TextField
-                    size="small"
-                    onBlur={() => {
-                      if (searchQuery == "") {
-                        toggleIsSearching();
-                      }
-                    }}
-                    value={searchQuery}
-                    autoFocus
-                    placeholder="Search in your library"
-                    variant="standard"
-                    color="success"
-                    onChange={handlerChange}
-                    sx={{
-                      input: { color: "white" },
-                      "& .MuiInput-underline:after": {
-                        borderBottomColor: "var(--spotify-color)",
-                      },
-                    }}
-                  />
-                </>
+                <TextField
+                  size="small"
+                  onBlur={() => {
+                    if (searchQuery == "") {
+                      toggleIsSearching();
+                    }
+                  }}
+                  value={searchQuery}
+                  autoFocus
+                  placeholder="Search in your library"
+                  variant="standard"
+                  color="success"
+                  onChange={handlerChange}
+                  sx={{
+                    input: { color: "white" },
+                    "& .MuiInput-underline:after": {
+                      borderBottomColor: "var(--spotify-color)",
+                    },
+                  }}
+                />
               )}
             </Grid>
             {isLoading ? (

@@ -6,6 +6,7 @@ import {
   IconButton,
   Slider,
   Stack,
+  Typography,
 } from "@mui/material";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
@@ -49,7 +50,7 @@ export function MusicPlayer() {
     "off" | "context" | "track" | undefined
   >(undefined);
   /*  */
-
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   /*  */
   const navigate = useNavigate();
   /*  */
@@ -93,6 +94,7 @@ export function MusicPlayer() {
   };
   useEffect(() => {
     all();
+    setIsLoading(false);
   }, [loadingArtist, access_token]);
 
   /* Slider de los minutos de la cancion */
@@ -179,7 +181,9 @@ export function MusicPlayer() {
 
   return (
     <>
-      {playbackState?.is_playing ? (
+      {isLoading ? (
+        <Loading />
+      ) : playbackState?.is_playing ? (
         <Card
           sx={{
             display: "flex",
@@ -350,7 +354,15 @@ export function MusicPlayer() {
           </Stack>
         </Card>
       ) : (
-        <Loading />
+        <Typography
+          sx={{
+            fontSize: "1.5rem",
+            color: "var(--font-color)",
+            margin: "0 auto",
+          }}
+        >
+          No hay dispositivo que esté reproduciendo música actualmente
+        </Typography>
       )}
     </>
   );
