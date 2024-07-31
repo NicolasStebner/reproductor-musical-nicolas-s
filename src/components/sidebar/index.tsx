@@ -1,4 +1,4 @@
-import { Box, Grid, Stack, TextField } from "@mui/material";
+import { Box, Grid, TextField } from "@mui/material";
 import { Subtitle } from "../../ui/text";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -9,7 +9,6 @@ import { Artist } from "../../domain/artist";
 import { serviceSpotify } from "../../services/service";
 import { Loading } from "../loading";
 import { useAuth } from "../../providers/auth/AuthContext";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { DelayComponent } from "../delay";
 
 export function SideBar() {
@@ -116,21 +115,6 @@ export function SideBar() {
             boxSizing: "border-box",
           }}
         >
-          <Stack direction={"row"} sx={{ justifyContent: "space-between" }}>
-            {access_token ? (
-              <Box sx={{ display: "flex", gap: 1 }}>
-                <AccountBoxIcon />
-                <Subtitle text="Logged"></Subtitle>
-              </Box>
-            ) : (
-              <Link to="/auth" className="link">
-                <Box sx={{ display: "flex", gap: 1 }}>
-                  <AccountBoxIcon />
-                  <Subtitle text="Log In"></Subtitle>
-                </Box>
-              </Link>
-            )}
-          </Stack>
           {/* Grid con los artistas */}
           <Grid
             container

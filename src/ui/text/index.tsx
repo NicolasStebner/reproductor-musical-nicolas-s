@@ -32,7 +32,7 @@ export function Subtitle({ text, textColor }: textChild) {
     <Typography
       sx={{
         fontSize: "1rem",
-        color: { textColor } || "var(--font-color)",
+        color: textColor || "var(--font-color)",
       }}
     >
       {text}
