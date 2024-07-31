@@ -16,7 +16,6 @@ export function Header() {
 
   const getUserData = async () => {
     const rta = await serviceSpotify.getUserData(access_token!!);
-    console.log(rta);
     setPhoto(rta.images[0].url);
     let letterC = rta.display_name[0];
     setLetter(letterC);
