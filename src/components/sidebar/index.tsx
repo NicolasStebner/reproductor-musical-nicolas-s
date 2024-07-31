@@ -128,6 +128,7 @@ export function SideBar() {
                   sx={{
                     display: "flex",
                     gap: "5px",
+                    marginBottom: "5px",
                     "&:hover": {
                       cursor: "pointer",
                     },
@@ -137,28 +138,26 @@ export function SideBar() {
                   <Subtitle text="Search in your library"></Subtitle>
                 </Box>
               ) : (
-                <>
-                  <TextField
-                    size="small"
-                    onBlur={() => {
-                      if (searchQuery == "") {
-                        toggleIsSearching();
-                      }
-                    }}
-                    value={searchQuery}
-                    autoFocus
-                    placeholder="Search in your library"
-                    variant="standard"
-                    color="success"
-                    onChange={handlerChange}
-                    sx={{
-                      input: { color: "white" },
-                      "& .MuiInput-underline:after": {
-                        borderBottomColor: "var(--spotify-color)",
-                      },
-                    }}
-                  />
-                </>
+                <TextField
+                  size="small"
+                  onBlur={() => {
+                    if (searchQuery == "") {
+                      toggleIsSearching();
+                    }
+                  }}
+                  value={searchQuery}
+                  autoFocus
+                  placeholder="Search in your library"
+                  variant="standard"
+                  color="success"
+                  onChange={handlerChange}
+                  sx={{
+                    input: { color: "white" },
+                    "& .MuiInput-underline:after": {
+                      borderBottomColor: "var(--spotify-color)",
+                    },
+                  }}
+                />
               )}
             </Grid>
             {isLoading ? (
