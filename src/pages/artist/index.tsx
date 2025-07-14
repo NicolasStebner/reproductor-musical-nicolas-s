@@ -8,7 +8,6 @@ import { TableTrackItem } from "../../components/trackItems-table";
 import { CardAlbum } from "../../components/card-album";
 import { Box, Button, Grid, Pagination } from "@mui/material";
 import { GridAlbumArtists } from "../../components/grid-album-artists";
-import { CardComp } from "../../components/card-artist";
 import { TopTrackItem } from "../../domain/topTrackItem";
 import { useAuth } from "../../providers/auth/AuthContext";
 import { DelayComponent } from "../../components/delay";
@@ -20,13 +19,11 @@ export function ArtistPage() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [pageAlbums, setPageAlbums] = useState(1);
-  const [pageRelatedArtists, setPageRelatedArtists] = useState(1);
   // @ts-ignore
   const [artist, setArtist] = useState<Artist>([]);
   const [userFollowsArtist, setUserFollowsArtist] = useState<boolean>(false);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [topTracks, setTopTracks] = useState<TopTrackItem[]>([]);
-  const [relatedArtists, setRelatedArtists] = useState<Artist[]>([]);
   //
   const { toggleUserFollowedSomeone, access_token } = useAuth();
   //
@@ -49,14 +46,6 @@ export function ArtistPage() {
       access_token!!
     );
     setTopTracks(topTracksData);
-  };
-
-  const getRelatedArtist = async () => {
-    const relatedArtistsData = await serviceSpotify.getRelatedArtists(
-      id!,
-      access_token!!
-    );
-    setRelatedArtists(relatedArtistsData);
   };
 
   const checkIfUserFollowsArtist = async () => {
@@ -102,7 +91,6 @@ export function ArtistPage() {
     getArtist();
     getAlbums();
     getTopTracks();
-    getRelatedArtist();
     checkIfUserFollowsArtist();
   }, [id, access_token]);
 
@@ -110,21 +98,9 @@ export function ArtistPage() {
     navigate("/album/" + albumID);
   };
 
-  const handlerArtist = (artistID: string) => {
-    navigate("/artist/" + artistID);
-    setPageRelatedArtists(1);
-    setPageAlbums(1);
-    scrollToTop();
-  };
-
   //@ts-ignore
   const handleChangePage = (event, value) => {
     setPageAlbums(value);
-  };
-
-  //@ts-ignore
-  const handleChangePageRelatedArtists = (event, value) => {
-    setPageRelatedArtists(value);
   };
 
   /* Paginacion albums */
@@ -140,14 +116,6 @@ export function ArtistPage() {
   );
   const pageCountAlbums = Math.ceil(leakedAlbums.length / ITEMS_PER_PAGE);
 
-  /* Paginacion Artistas relacionados */
-  const startIndex = (pageRelatedArtists - 1) * ITEMS_PER_PAGE;
-  const paginatedArtists = relatedArtists.slice(
-    startIndex,
-    startIndex + ITEMS_PER_PAGE
-  );
-  const pageCount = Math.ceil(relatedArtists.length / ITEMS_PER_PAGE);
-  /*  */
   return (
     <Box sx={{ marginBottom: "50px" }}>
       <Box ref={blockRef}>
@@ -214,57 +182,6 @@ export function ArtistPage() {
               count={pageCountAlbums}
               page={pageAlbums}
               onChange={handleChangePage}
-              color="primary"
-              variant="outlined"
-            />
-          </Box>
-        </Box>
-        <Box>
-          <SubtitleArtist text="Other Artists" />
-          <Box
-            sx={{
-              width: "95%",
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-            }}
-          >
-            <GridAlbumArtists>
-              {paginatedArtists.map((a, index) => {
-                return (
-                  <Grid
-                    item
-                    xs={2}
-                    key={a.id}
-                    onClick={() => handlerArtist(a.id)}
-                  >
-                    <DelayComponent key={index} delay={index * 200}>
-                      <CardComp
-                        key={a.id}
-                        avatar={{
-                          alt: "",
-                          src: `${a.images[0].url}`,
-                        }}
-                        title={a.name}
-                        subtitle={a.type}
-                      />
-                    </DelayComponent>
-                  </Grid>
-                );
-              })}
-            </GridAlbumArtists>
-            <Pagination
-              sx={{
-                ul: {
-                  "& .MuiPaginationItem-root": {
-                    color: "#fff",
-                    borderColor: "var(--spotify-color)",
-                  },
-                },
-              }}
-              count={pageCount}
-              page={pageRelatedArtists}
-              onChange={handleChangePageRelatedArtists}
               color="primary"
               variant="outlined"
             />
