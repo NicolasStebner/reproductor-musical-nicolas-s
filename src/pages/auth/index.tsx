@@ -84,7 +84,8 @@ async function getAccessToken(code: string) {
     body: params,
   });
 
-  const { access_token } = await result.json();
+  const object = await result.json();
+  console.log("acess token: " + JSON.stringify(object));
 
-  return access_token;
+  return object.access_token;
 }
